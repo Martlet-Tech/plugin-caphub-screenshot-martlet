@@ -27,7 +27,7 @@ function start_capture() {
     if (mode) return;
     mode = "selecting";
     startX = 0; startY = 0;
-    var r = ctx.overlay.cmd(JSON.stringify({cmd:"create",x:0,y:0,w:0,h:0}));
+    var r = ctx.overlay.cmd(JSON.stringify({cmd:"create",x:0,y:0,w:0,h:0,t:false}));
     overlay_handle = parseInt(r) || 0;
     if (overlay_handle) ctx.log("debug", "screenshot overlay: " + overlay_handle);
 }
