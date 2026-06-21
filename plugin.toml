@@ -1,0 +1,15 @@
+[plugin]
+name = "screenshot"
+version = "0.1.0"
+description = "Screen capture — select region, capture to file"
+
+[hooks]
+mouse = true
+
+[capabilities]
+overlay = true
+screen = true
+
+[events]
+subscribes = ["screenshot.capture", "plugin.action", "mouse.down", "mouse.move", "mouse.up"]
+publishes = []

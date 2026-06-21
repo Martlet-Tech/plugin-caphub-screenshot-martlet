@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Screenshot — CapaHub</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Microsoft YaHei",sans-serif;background:#f5f5f5;color:#333;padding:20px}
+.card{background:#fff;border-radius:10px;box-shadow:0 1px 8px rgba(0,0,0,0.08);padding:24px;margin-bottom:16px}
+h1{font-size:20px;font-weight:600}.version{color:#999;font-size:12px;margin-bottom:12px}
+.desc{color:#666;font-size:13px;line-height:1.6;margin-bottom:12px}
+hr{border:none;border-top:1px solid #eee;margin:16px 0}
+h2{font-size:14px;font-weight:600;margin-bottom:10px}
+.btn{display:inline-block;padding:10px 24px;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;border:none;background:#e8e8e8;color:#333;margin-right:6px;margin-bottom:6px}
+.btn-primary{background:#0066CC;color:#fff}
+.btn:active{opacity:0.8}
+.btn:disabled{opacity:0.4;cursor:default}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid #eee}
+th{font-weight:600;color:#888;font-size:12px}
+#log{background:#f8f8f8;border-radius:6px;padding:10px;font-size:12px;font-family:"Cascadia Code","Consolas",monospace;max-height:200px;overflow-y:auto;white-space:pre-wrap;word-break:break-all;margin-top:10px;color:#555}
+</style>
+</head>
+<body>
+<div class="card">
+    <h1>Screenshot</h1>
+    <div class="version">v0.1.0 — CapaHub Plugin</div>
+    <div class="desc">Click <strong>Capture</strong> to start region selection. Drag with left mouse to select area. Screenshot saved as BMP to temp folder.</div>
+    <hr>
+    <button class="btn btn-primary" id="btnCapture">Capture Region</button>
+    <p id="status" style="margin-top:10px;font-size:13px;color:#228B22"></p>
+    <hr>
+    <h2>Log</h2>
+    <div id="log">// Ready</div>
+</div>
+<script>
+var log=document.getElementById("log");
+function l(msg,cls){var d=document.createElement("div");d.className=cls||"";d.textContent="> "+msg;log.appendChild(d);log.scrollTop=log.scrollHeight}
+
+document.getElementById("btnCapture").onclick=function(){
+    var msg=JSON.stringify({action:"screenshot.capture",data:{}});
+    l("postMessage: "+msg,"info");
+    try{window.chrome.webview.postMessage(msg)}catch(e){l("postMessage failed: "+e,"err")}
+};
+
+window.chrome.webview.addEventListener("message",function(e){l("received: "+JSON.stringify(e.data),"ok")});
+l("Ready. Click Capture to start.","ok");
+</script>
+</body>
+</html>
