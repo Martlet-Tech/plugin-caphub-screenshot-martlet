@@ -5,7 +5,11 @@ var mode = null;
 var overlay_handle = 0;
 var startX = 0, startY = 0;
 
-ctx.log("info", "screenshot plugin started — press F5 to capture");
+ctx.log("info", "screenshot plugin started — press F5 to capture, ESC to cancel");
+
+function on_keyboard_down(e) {
+    if (e.vk === 27) cancel_capture(); // ESC
+}
 
 function on_screenshot_capture() {
     startX = 0; startY = 0;
